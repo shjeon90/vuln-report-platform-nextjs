@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>HTML & JavaScript Basics</title>
+</head>
+
+<body>
+
+  <!-- ========================================
+       1. Common Elements
+       ======================================== -->
+  <h1>Vulnerability Reporting Platform</h1>
+  <p>This is a <strong>paragraph</strong> with a <a href="https://owasp.org" target="_blank">link</a>.</p>
+
+  <h2>Vulnerability Categories</h2>
+  <ul>
+    <li>XSS — Cross-Site Scripting</li>
+    <li>CSRF — Cross-Site Request Forgery</li>
+    <li>SQLi — SQL Injection</li>
+  </ul>
+
+  <!-- ========================================
+       2. Table
+       ======================================== -->
+  <h2>Reports</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Severity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Reflected XSS in search</td>
+        <td>XSS</td>
+        <td>CRITICAL</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Login CSRF vulnerability</td>
+        <td>CSRF</td>
+        <td>HIGH</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ========================================
+       3. Form
+       ======================================== -->
+  <h2>Submit a Report</h2>
+  <form id="report-form">
+    <div>
+      <label for="title">Title</label><br />
+      <input type="text" id="title" placeholder="Enter title" />
+    </div>
+    <br />
+    <div>
+      <label for="category">Category</label><br />
+      <select id="category">
+        <option value="">Select</option>
+        <option value="XSS">XSS</option>
+        <option value="CSRF">CSRF</option>
+        <option value="SQLI">SQLI</option>
+      </select>
+    </div>
+    <br />
+    <div>
+      <label for="content">Description</label><br />
+      <textarea id="content" rows="4" cols="40" placeholder="Describe the vulnerability..."></textarea>
+    </div>
+    <br />
+    <button type="submit">Submit</button>
+  </form>
+  <p id="form-message"></p>
+
+  <!-- ========================================
+       4. DOM Manipulation
+       ======================================== -->
+  <h2>DOM Manipulation</h2>
+  <p>Count: <span id="count">0</span></p>
+  <button onclick="increment()">+</button>
+  <button onclick="decrement()">-</button>
+
+  <!-- ========================================
+       5. Event Listeners
+       ======================================== -->
+  <h2>Search Reports</h2>
+  <input type="text" id="search" placeholder="Search..." />
+  <ul id="search-results"></ul>
+
+  <!-- ========================================
+       JavaScript
+       ======================================== -->
+  <script>
+
+    // --- Section 4: DOM Manipulation ---
+
+    let count = 0;
+    const countDisplay = document.getElementById('count');
+
+    function increment() {
+      count++;
+      countDisplay.textContent = count;
+    }
+
+    function decrement() {
+      count--;
+      countDisplay.textContent = count;
+    }
+
+
+    // --- Section 3: Form + addEventListener + preventDefault ---
+
+    const form = document.getElementById('report-form');
+    const formMessage = document.getElementById('form-message');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const title    = document.getElementById('title').value;
+      const category = document.getElementById('category').value;
+      const content  = document.getElementById('content').value;
+
+      if (!title || !category || !content) {
+        formMessage.textContent = 'Please fill in all fields.';
+        return;
+      }
+
+      formMessage.textContent =
+        'Submitted! Title: ' + title + ', Category: ' + category;
+      form.reset();
+    });
+
+
+    // --- Section 5: Event Listeners ---
+
+    const reports = [
+      { id: 1, title: 'Reflected XSS in search' },
+      { id: 2, title: 'Login CSRF vulnerability' },
+      { id: 3, title: 'SQL injection in report ID' },
+    ];
+
+    const searchInput   = document.getElementById('search');
+    const searchResults = document.getElementById('search-results');
+
+    searchInput.addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase();
+      searchResults.innerHTML = '';
+
+      const filtered = reports.filter(r => r.title.toLowerCase().includes(query));
+
+      filtered.forEach(function(report) {
+        const li = document.createElement('li');
+        li.textContent = '#' + report.id + ' — ' + report.title;
+        searchResults.appendChild(li);
+      });
+    });
+
+  </script>
+
+</body>
+</html>
