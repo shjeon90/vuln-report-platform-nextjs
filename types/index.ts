@@ -45,6 +45,49 @@ export interface DashboardStatistics {
     reportsBySeverity: { severity: string; count: number }[];
 }
 
+export enum ReportCategory {
+    XSS = 'XSS',
+    CSRF = 'CSRF',
+    SQLI = 'SQLI',
+    OTHER = 'OTHER',
+}
+
+export enum ReportStatus {
+    SUBMITTED = 'SUBMITTED',
+    IN_REVIEW = 'IN_REVIEW',
+    APPROVED = 'APPROVED',
+    REJECTED = 'REJECTED',
+}
+
+export enum ReportSeverity {
+    LOW = 'LOW',
+    MEDIUM = 'MEDIUM',
+    HIGH = 'HIGH',
+    CRITICAL = 'CRITICAL',
+}
+
+export interface Report{
+    id: number;
+    title: string;
+    content: string;
+    category: ReportCategory;
+    status: ReportStatus;
+    severity: ReportSeverity;
+    userId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface DashboardReport {
+    totalReports: number;
+    submittedReports: number;
+    inReviewReports: number;
+    approvedReports: number;
+    rejectedReports: number;
+    reportsByCategory: { category: string; count: number }[];
+    reportsBySeverity: { severity: string; count: number }[];
+}
+
 export interface CVEItem {
     id: string;
     description: string;

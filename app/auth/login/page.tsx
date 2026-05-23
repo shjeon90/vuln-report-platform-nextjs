@@ -1,6 +1,8 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export default function LoginPage() {
@@ -10,6 +12,7 @@ export default function LoginPage() {
  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
  const { login } = useAuth();
+ const router = useRouter();
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -18,7 +21,8 @@ export default function LoginPage() {
 
     try {
         await login({ email, password });
-        window.location.href = '/dashboard';
+        // window.location.href = '/dashboard';
+        router.push('/dashboard');
     } catch {
         setError('Login failed. Please check your credentials and try again.');
     } finally {
@@ -88,7 +92,9 @@ export default function LoginPage() {
           </button>
           <p style={{ textAlign: 'center', marginTop: '16px', fontSize: '14px', color: '#6b7280' }}>
             Don't have an account? {' '}
-            <a href="/auth/register" style={{color: '#1d4ed8'}}>Register</a>
+            <Link href="/auth/register" style={{color: '#1d4ed8'}}>
+              Register
+            </Link>
           </p>
         </form>
       </div>

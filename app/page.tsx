@@ -2,18 +2,26 @@
 
 import UserBadge from "@/components/UserBadge";
 import { useAuth } from "../contexts/AuthContext";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const { user } = useAuth();
+  const {user, isLoading} = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (user) {
+      router.push('/dashboard');
+    } else {
+      router.push('/auth/login');
+    }
+  }, [isLoading, user, router]);
 
   return (
-    <div style={{ padding: '40px' }}>
-      <h1>Vulnerability Reporting Platform</h1>
-      {user ? (
-        <UserBadge username={user.username} role={user.role} />
-      ) : (
-        <p style={{ color: '#6b7280' }}>Not logged in.</p>
-      )}
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+      <p style={{ color: '#6b7280' }}>Redirecting...</p>
     </div>
   );
 }

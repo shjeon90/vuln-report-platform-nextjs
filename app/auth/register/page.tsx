@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState<string>('');
@@ -11,6 +13,7 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { register } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +22,8 @@ export default function RegisterPage() {
     try {
       await register({ email, username, password });
       // [Week 10] Replace with: router.push('/dashboard')
-      window.location.href = '/auth/login';
+      // window.location.href = '/auth/login';
+      router.push('/auth/login');
     } catch {
       setError('Registration failed. Please try again.');
     } finally {
@@ -120,7 +124,9 @@ export default function RegisterPage() {
 
           <p style={{ textAlign: 'center', marginTop: '16px', fontSize: '14px', color: '#6b7280' }}>
             Already have an account?{' '}
-            <a href="/auth/login" style={{ color: '#1d4ed8' }}>Login</a>
+            <Link href="/auth/login" style={{ color: '#1d4ed8' }}>
+              Login
+            </Link>
           </p>
         </form>
       </div>

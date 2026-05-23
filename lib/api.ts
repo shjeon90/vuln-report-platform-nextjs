@@ -1,4 +1,5 @@
 import { AuthResponse, CVEItem, DashboardStatistics, LoginRequest, RegisterRequest, RegisterResponse } from "@/types";
+import { Report } from "@/types";
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
@@ -58,5 +59,38 @@ export const api = {
             }
         });
         return parseOrThrow(response) as Promise<CVEItem[]>;
+    },
+
+    async getReports(token: string): Promise<Report[]> {
+        const response = await fetch(`${API_URL}/reports`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        return parseOrThrow(response) as Promise<Report[]>;
+    },
+
+    async getReport(id: number, token: string): Promise<Report> {
+        const response = await fetch(`${API_URL}/reports/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        return parseOrThrow(response) as Promise<Report>;
+    },
+
+    async createReport(
+        data: {title: string, content: string, category: string},
+        token: string,
+    ): Promise<Report> {
+        const response = await fetch(`${API_URL}/reports`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        });
+        return parseOrThrow(response) as Promise<Report>;
     }
 }
