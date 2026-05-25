@@ -4,7 +4,7 @@ import UserBadge from "@/components/UserBadge";
 import { useAuth } from "@/contexts/AuthContext";
 import { api } from "@/lib/api";
 import { CVEItem, DashboardStatistics } from "@/types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DashboardPage() {

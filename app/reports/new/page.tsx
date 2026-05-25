@@ -3,7 +3,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { api } from "@/lib/api";
 import { ReportCategory } from "@/types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function NewReportPage() {
