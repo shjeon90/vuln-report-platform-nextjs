@@ -48,7 +48,7 @@ export interface DashboardStatistics {
 export enum ReportCategory {
     XSS = 'XSS',
     CSRF = 'CSRF',
-    SQLI = 'SQLI',
+    SQLI = 'SQL_INJECTION',
     OTHER = 'OTHER',
 }
 

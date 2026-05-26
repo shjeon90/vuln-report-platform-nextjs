@@ -11,7 +11,7 @@ export default function NewReportPage() {
     const router = useRouter();
     const [title, setTitle] = useState<string>('');
     const [content, setContent] = useState<string>('');
-    const [category, setCategory] = useState<string>('');
+    const [category, setCategory] = useState<string>(ReportCategory.XSS);
     const [error, setError] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
